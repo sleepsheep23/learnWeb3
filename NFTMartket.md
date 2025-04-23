@@ -1,10 +1,11 @@
 # NFT Marketplace 架构分享
 NFT Marketplace后端代码
-[EasySwapBackend](https://github.com/ProjectBreakdown/tree/main/EasySwapBackend) 
-[EasySwapBase ](https://github.com/ProjectBreakdown/tree/main/EasySwapBase) 
-[EasySwapSync](https://github.com/ProjectBreakdown/tree/main/EasySwapSync) :point_left: 
-[NFT Marketplace合约代码](https://github.com/ProjectBreakdown/tree/main/EasySwapContract) :point_left: 
-[NFT Marketplace前端代码](https://github.com/ProjectBreakdown/tree/main/nft-market-fe) :point_left: 
+:point_left: [EasySwapBackend](https://github.com/ProjectBreakdown-NFTMarket/tree/main/EasySwapBackend) 
+
+:point_left: [EasySwapBase ](https://github.com/ProjectBreakdown-NFTMarket/tree/main/EasySwapBase) 
+
+:point_left: [EasySwapSync](https://github.com/ProjectBreakdown-NFTMarket/tree/main/EasySwapSync) 
+:point_left: [NFT Marketplace合约代码](https://github.com/ProjectBreakdown-NFTMarket/tree/main/EasySwapContract) :point_left: [NFT Marketplace前端代码](https://github.com/ProjectBreakdown-NFTMarket/tree/main/nft-market-fe) 
 
 视频地址
 -  :tv:: NFT marketplace项目架构分享 : https://meeting.tencent.com/crm/NQ4rGVEZ4e
