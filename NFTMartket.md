@@ -27,8 +27,9 @@ NFT Marketplace后端代码
 
 -  :tv:: NFT marketplace Backend模块分享 : https://meeting.tencent.com/crm/2VarZZbP87
 
--  :tv:: NFT Market项目面试指南 : https://meeting.tencent.com/crm/KnwGjE11c7
+-  :tv:: NFT Market项目面试指南1 : https://meeting.tencent.com/crm/KnwGjE11c7
 - [课件:NFT Market 项目面试指南](https://wcngrtwsafnt.feishu.cn/wiki/UF7Pw16xli2nrrkSC7Lc7ix8ngf?from=from_copylink)
+-  :tv:: NFT Market项目面试指南2 : https://meeting.tencent.com/crm/2awJAgym74
 
 ## 背景介绍
 
