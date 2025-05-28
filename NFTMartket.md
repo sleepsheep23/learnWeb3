@@ -13,23 +13,23 @@ NFT Marketplace后端代码
 
 
 视频地址
--  :tv:: NFT marketplace项目架构分享 : https://meeting.tencent.com/crm/NQ4rGVEZ4e
-课件1：[NFT Marketplace架构分享 ](https://wcngrtwsafnt.feishu.cn/wiki/UG83wozS6iWGg8ky1sCcUV84nbb?from=from_copylink)
+-  :tv:: NFT marketplace项目 架构分享: 📺 [视频](https://k22zz.xetlk.com/s/4Dj4xv)
+📙 [课件](https://wcngrtwsafnt.feishu.cn/wiki/UG83wozS6iWGg8ky1sCcUV84nbb?from=from_copylink)
 
--  :tv:: NFT market 合约拆解 : https://meeting.tencent.com/crm/NoEG5wEb05
-课件2：[EasySwap 合约方案设计](https://wcngrtwsafnt.feishu.cn/wiki/IjtwwUhUOibXV4kvWyMcfc8OnVc?from=from_copylink)
+-  :tv:: NFT marketplace项目 合约拆解: 📺 [视频](https://k22zz.xetlk.com/s/30cSP3)
+📙 [课件](https://wcngrtwsafnt.feishu.cn/wiki/IjtwwUhUOibXV4kvWyMcfc8OnVc?from=from_copylink)
 
--  :tv:: NFT marketplace项目 合约模块实战分享1 : https://meeting.tencent.com/crm/ld1GxVQdb0
+-  :tv:: NFT marketplace项目 合约模块实战分享1: 📺 [视频](https://k22zz.xetlk.com/s/8SQoV)
 
--  :tv:: NFT marketplace项目 合约模块实战分享2 : https://meeting.tencent.com/crm/2BLoLyj4fd
+-  :tv:: NFT marketplace项目 合约模块实战分享2: 📺 [视频](https://k22zz.xetlk.com/s/lIG86)
 
--  :tv:: NFT marketplace项目 合约模块实战分享3 : https://meeting.tencent.com/crm/29mEpaLQ94
+-  :tv:: NFT marketplace项目 合约模块实战分享3: 📺[视频](https://k22zz.xetlk.com/s/E1OK8)
 
--  :tv:: NFT marketplace Backend模块分享 : https://meeting.tencent.com/crm/2VarZZbP87
+-  :tv:: NFT marketplace Backend模块分享: 📺 [视频](https://k22zz.xetlk.com/s/3yJTtF)
 
--  :tv:: NFT Market项目面试指南1 : https://meeting.tencent.com/crm/KnwGjE11c7
-- [课件:NFT Market 项目面试指南](https://wcngrtwsafnt.feishu.cn/wiki/UF7Pw16xli2nrrkSC7Lc7ix8ngf?from=from_copylink)
--  :tv:: NFT Market项目面试指南2 : https://meeting.tencent.com/crm/2awJAgym74
+-  :tv:: NFT Market项目面试指南1: 📺 [视频](https://k22zz.xetlk.com/s/1geNlW)
+📙 [课件](https://wcngrtwsafnt.feishu.cn/wiki/UF7Pw16xli2nrrkSC7Lc7ix8ngf?from=from_copylink)
+-  :tv:: NFT Market项目面试指南2: 📺 [视频](https://k22zz.xetlk.com/s/2AHBaK)
 
 ## 背景介绍
 
