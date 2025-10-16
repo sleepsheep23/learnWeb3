@@ -20,6 +20,9 @@ type Config struct {
 	Evm            *erc.NftErc       `toml:"evm" json:"evm"`
 	MetadataParse  *MetadataParse    `toml:"metadata_parse" mapstructure:"metadata_parse" json:"metadata_parse"`
 	ChainSupported []*ChainSupported `toml:"chain_supported" mapstructure:"chain_supported" json:"chain_supported"`
+	Coingecko      *CoinGeckoCfg     `toml:"coingecko" mapstructure:"coingecko" json:"coingecko"`
+	EtherScan      *EtherScanCfg     `toml:"etherscan" mapstructure:"etherscan" json:"etherscan"`
+	Alchemy        *AlchemyCfg       `toml:"alchemy" mapstructure:"alchemy" json:"alchemy"`
 }
 
 type ProjectCfg struct {
@@ -54,6 +57,22 @@ type ChainSupported struct {
 	Name     string `toml:"name" mapstructure:"name" json:"name"`
 	ChainID  int    `toml:"chain_id" mapstructure:"chain_id" json:"chain_id"`
 	Endpoint string `toml:"endpoint" mapstructure:"endpoint" json:"endpoint"`
+}
+
+type CoinGeckoCfg struct {
+	ApiKey       string `toml:"apikey" mapstructure:"apikey" json:"apikey"`
+	ApiHeaderKey string `toml:"apiHeaderKey" mapstructure:"apiHeaderKey" json:"apiHeaderKey"`
+	BaseUrl      string `toml:"baseUrl" mapstructure:"baseUrl" json:"baseUrl"`
+}
+
+type EtherScanCfg struct {
+	ApiKey  string `toml:"apikey" mapstructure:"apikey" json:"apikey"`
+	BaseUrl string `toml:"baseUrl" mapstructure:"baseUrl" json:"baseUrl"`
+}
+
+type AlchemyCfg struct {
+	ChainID     int64  `toml:"chain_id" mapstructure:"chain_id" json:"chain_id"`
+	EthereumWss string `toml:"ethereum_wss" mapstructure:"ethereum_wss" json:"ethereum_wss"`
 }
 
 // UnmarshalConfig unmarshal conifg file

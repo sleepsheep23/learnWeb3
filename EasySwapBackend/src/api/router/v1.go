@@ -54,4 +54,26 @@ func loadV1(r *gin.Engine, svcCtx *svc.ServerCtx) {
 	{
 		orders.GET("", v1.OrderInfosHandler(svcCtx)) // 批量查询出价信息
 	}
+
+	coins := apiV1.Group("/coins")
+	{
+		coins.GET("/search", v1.SearchCoinsHandler(svcCtx)) // 搜索币种信息
+		coinFavorites := coins.Group("/favorites")
+		{
+			coinFavorites.GET("/:address", v1.ListUserCoinFavoritesHandler(svcCtx)) // 获取用户收藏的币种列表
+			// coinFavorites.GET("/:address/:coin_id", v1.GetUserCoinFavoritesHandler(svcCtx))      // 获取用户收藏的币种信息
+			coinFavorites.PUT("/:address", v1.AddUserCoinFavoriteHandler(svcCtx))                // 添加用户收藏的币种信息
+			coinFavorites.DELETE("/:address/:coin_id", v1.RemoveUserCoinFavoriteHandler(svcCtx)) // 删除用户收藏的币种信息
+		}
+		coinAlerts := coins.Group("/alerts")
+		{
+			coinAlerts.GET("/:address", v1.ListUserCoinAlertsHandler(svcCtx))                    // 获取某用户的所有预警
+			coinAlerts.PUT("/:address", v1.AddUserCoinAlertHandler(svcCtx))                      // 新增或修改预警
+			coinAlerts.DELETE("/:address/:coin_id/:type", v1.DeleteUserCoinAlertHandler(svcCtx)) // 删除预警
+		}
+		ether := coins.Group("/ether")
+		{
+			ether.GET("/balance/:address", v1.GetEtherBalanceHandler(svcCtx)) // 获取以太坊余额
+		}
+	}
 }

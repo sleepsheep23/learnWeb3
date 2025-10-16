@@ -1,6 +1,6 @@
 module github.com/ProjectsTask/EasySwapBase
 
-go 1.21
+go 1.24
 
 require (
 	github.com/ethereum/go-ethereum v1.12.0

@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/v1/:path*",
-        destination: "http://api-nft.rcc-tec.xyz/api/v1/:path*", // 开发环境
+        destination: "http://localhost:80/api/v1/:path*", // 开发环境
       },
     ];
     // }

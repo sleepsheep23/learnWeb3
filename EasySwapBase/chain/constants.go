@@ -18,6 +18,7 @@ const (
 	EthChainID      = 1
 	OptimismChainID = 10
 	SepoliaChainID  = 11155111
+	HardhatChainID  = 31337
 )
 
 func UniformAddress(chainName string, address string) (string, error) {

@@ -8,6 +8,7 @@ import (
 	"github.com/ProjectsTask/EasySwapBackend/src/app"
 	"github.com/ProjectsTask/EasySwapBackend/src/config"
 	"github.com/ProjectsTask/EasySwapBackend/src/service/svc"
+	"github.com/ProjectsTask/EasySwapBackend/src/service/v1"
 )
 
 const (
@@ -34,6 +35,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	// Start alert check timer
+	// go service.StartPriceMonitor(serverCtx)
+
+	go service.StartBlockMonitor(serverCtx)
+
 	// Initialize router
 	r := router.NewRouter(serverCtx)
 	app, err := app.NewPlatform(c, r, serverCtx)

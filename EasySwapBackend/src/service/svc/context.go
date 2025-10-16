@@ -2,6 +2,8 @@ package svc
 
 import (
 	"context"
+	"net/http"
+	"time"
 
 	"github.com/ProjectsTask/EasySwapBase/chain/nftchainservice"
 	"github.com/ProjectsTask/EasySwapBase/logger/xzap"
@@ -21,10 +23,11 @@ type ServerCtx struct {
 	C  *config.Config
 	DB *gorm.DB
 	//ImageMgr image.ImageManager
-	Dao      *dao.Dao
-	KvStore  *xkv.Store
-	RankKey  string
-	NodeSrvs map[int64]*nftchainservice.Service
+	Dao        *dao.Dao
+	KvStore    *xkv.Store
+	RankKey    string
+	NodeSrvs   map[int64]*nftchainservice.Service
+	HttpClient *http.Client
 }
 
 func NewServiceContext(c *config.Config) (*ServerCtx, error) {
@@ -81,6 +84,16 @@ func NewServiceContext(c *config.Config) (*ServerCtx, error) {
 	serverCtx.C = c
 
 	serverCtx.NodeSrvs = nodeSrvs
+
+	// http client
+	serverCtx.HttpClient = &http.Client{
+		Timeout: 10 * time.Second,
+		Transport: &http.Transport{
+			MaxIdleConns:    20,               // 最大空闲连接数
+			MaxConnsPerHost: 20,               // 每个host的最大连接数
+			IdleConnTimeout: 90 * time.Second, // 空闲连接存活时间
+		},
+	}
 
 	return serverCtx, nil
 }

@@ -48,6 +48,11 @@ module.exports = {
     sepolia: {
       url: `https://eth-sepolia.g.alchemy.com/v2/${SEPOLIA_ALCHEMY_AK}`,
       accounts: [`${SEPOLIA_PK_ONE}`, `${SEPOLIA_PK_TWO}`],
+      gas: 8000000,
+    },
+    localhost: {
+      url: "http://127.0.0.1:8545",  // Hardhat node 默认 RPC 地址
+      chainId: 31337,               // Hardhat node 的 chainId
     },
     // optimism: {
     //   url: `https://rpc.ankr.com/optimism`,

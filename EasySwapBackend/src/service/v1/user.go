@@ -8,14 +8,15 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"fmt"
-	"io"
-	"strings"
-	"time"
-
-	"github.com/ProjectsTask/EasySwapBase/errcode"
-	"github.com/ProjectsTask/EasySwapBase/stores/gdb/orderbookmodel/base"
+	"github.com/ethereum/go-ethereum/accounts"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/google/uuid"
 	"github.com/pkg/errors"
+	"gorm.io/gorm"
+	"io"
+	"regexp"
+	"strings"
 
 	"github.com/ProjectsTask/EasySwapBackend/src/api/middleware"
 	"github.com/ProjectsTask/EasySwapBackend/src/service/svc"
@@ -30,62 +31,91 @@ func getUserLoginTokenCacheKey(address string) string {
 	return middleware.CR_LOGIN_KEY + ":" + strings.ToLower(address)
 }
 
+func verifySignature(message, signature string) error {
+	msgHash := accounts.TextHash([]byte(message))
+
+	// Step2: 签名转字节
+	sigBytes := common.FromHex(signature)
+	if sigBytes[64] != 27 && sigBytes[64] != 28 {
+		return fmt.Errorf("invalid signature (V not in {27,28})")
+	}
+	sigBytes[64] -= 27 // go-ethereum需要 {0,1}
+
+	// Step3: 从签名恢复公钥
+	pubKey, err := crypto.SigToPub(msgHash, sigBytes)
+	if err != nil {
+		return fmt.Errorf("cannot resolve the public key from signature, %s", err.Error())
+	}
+
+	// Step4: 公钥转以太坊地址
+	recoveredAddr := crypto.PubkeyToAddress(*pubKey)
+
+	// Step5: 比对 recoveredAddr 和 siweMessage 内声明的 address
+	fmt.Println("Recovered address:", recoveredAddr.Hex())
+
+	// 你需要额外从 siweMessage 里 parse 出用户声明的 address
+	var re = regexp.MustCompile(`0x[0-9A-Za-z]+`)
+	claimedAddr := re.FindString(message)
+	if recoveredAddr.Hex() == claimedAddr {
+		return nil
+	} else {
+		return fmt.Errorf("signature verification failed")
+	}
+}
+
 func UserLogin(ctx context.Context, svcCtx *svc.ServerCtx, req types.LoginReq) (*types.UserLoginInfo, error) {
 	// 返回结果
 	res := types.UserLoginInfo{}
 
 	//todo: add verify signature
-	//ok := verifySignature(req.Message, req.Signature, req.PublicKey)
-	//if !ok {
-	//	return nil, errors.New("invalid signature")
+	err := verifySignature(req.Message, req.Signature)
+	if err != nil {
+		return nil, errors.New("invalid signature")
+	}
+
+	// todo this is for test
+	// 从缓存中获取登录消息UUID
+	//cachedUUID, err := svcCtx.KvStore.Get(getUserLoginMsgCacheKey(req.Address))
+	//if cachedUUID == "" || err != nil {
+	//	return nil, errcode.ErrTokenExpire
+	//}
+	//
+	//// 分割消息获取UUID
+	//splits := strings.Split(req.Message, "Nonce:")
+	//if len(splits) != 2 {
+	//	return nil, errcode.ErrTokenExpire
+	//}
+	//
+	//// 获取登录UUID并验证
+	//loginUUID := strings.Trim(splits[1], "\n")
+	//if loginUUID != cachedUUID {
+	//	return nil, errcode.ErrTokenExpire
 	//}
 
-	// 从缓存中获取登录消息UUID
-	cachedUUID, err := svcCtx.KvStore.Get(getUserLoginMsgCacheKey(req.Address))
-	if cachedUUID == "" || err != nil {
-		return nil, errcode.ErrTokenExpire
-	}
-
-	// 分割消息获取UUID
-	splits := strings.Split(req.Message, "Nonce:")
-	if len(splits) != 2 {
-		return nil, errcode.ErrTokenExpire
-	}
-
-	// 获取登录UUID并验证
-	loginUUID := strings.Trim(splits[1], "\n")
-	if loginUUID != cachedUUID {
-		return nil, errcode.ErrTokenExpire
-	}
-
 	// 查询用户信息
-	var user base.User
-	db := svcCtx.DB.WithContext(ctx).Table(base.UserTableName()).
-		Select("id,address,is_allowed").
+	var user types.Users
+	db := svcCtx.DB.WithContext(ctx).
+		Select("id,address,chain_id").
 		Where("address = ?", req.Address).
 		Find(&user)
-	if db.Error != nil {
+	if db.Error != nil && db.Error != gorm.ErrRecordNotFound {
 		return nil, errors.Wrap(db.Error, "failed on get user info")
 	}
 
 	// 如果用户不存在则创建新用户
 	if user.Id == 0 {
-		now := time.Now().UnixMilli()
-		user := &base.User{
-			Address:    req.Address,
-			IsAllowed:  false,
-			IsSigned:   true,
-			CreateTime: now,
-			UpdateTime: now,
+		user := &types.Users{
+			Address: req.Address,
+			ChainId: req.ChainID,
 		}
-		if err := svcCtx.DB.WithContext(ctx).Table(base.UserTableName()).
-			Create(user).Error; err != nil {
+		if err := svcCtx.DB.WithContext(ctx).Create(user).Error; err != nil {
 			return nil, errors.Wrap(db.Error, "failed on create new user")
 		}
 	}
 
 	// 生成用户token
-	tokenKey := getUserLoginTokenCacheKey(req.Address)
+	// tokenKey := getUserLoginTokenCacheKey(req.Address)
+	tokenKey := "testToken"
 	userToken, err := AesEncryptOFB([]byte(tokenKey), []byte(middleware.CR_LOGIN_SALT))
 	if err != nil {
 		return nil, errors.Wrap(err, "failed on get user token")
@@ -98,7 +128,6 @@ func UserLogin(ctx context.Context, svcCtx *svc.ServerCtx, req types.LoginReq) (
 
 	// 设置返回结果
 	res.Token = hex.EncodeToString(userToken)
-	res.IsAllowed = user.IsAllowed
 
 	return &res, err
 }
